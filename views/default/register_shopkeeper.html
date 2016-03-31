@@ -1,0 +1,94 @@
+{{extend 'layout.html'}}
+<style>
+    table {
+         border: 1px solid black;
+         width: 35%;
+    }
+    td {
+         border: 0px solid black;
+        padding: 5px;
+        height: 50px;
+        width : 20px;
+        text-align: left;
+    }
+</style>
+<h1>Shopkeeper Registration Page</h1>
+<form action="{{=URL('successful_shopkeeper_registration')}}">
+    <table>
+        <tr>
+            <td><label for="shop_name">Shop Name*</label></td>
+            <td><input name="shop_name" id="shop_name"/></td>
+        </tr>
+        <tr>
+            <td><label for="shop_address">Shop Address*</label></td>
+            <td><input name="shop_address" id="shop_address"/></td>
+        </tr>
+        <tr>
+            <td><label for="shop_area">Shop Area*</label></td>
+            <td><input name="shop_area" id="shop_area"/></td>
+        </tr>
+        <tr>
+            <td><label for="min_discount">Minimum Discount*</label></td>
+            <td><input name="min_discount" id="min_discount"/></td>
+        </tr>
+        <tr>
+            <td><label for="shopkeeper_name">Shopkeeper Name*</label></td>
+            <td><input name="shopkeeper_name" id="shopkeeper_name"/></td>
+        </tr>
+        <tr>
+            <td><label for="shopkeeper_email_id">Email*</label></td>
+            <td><input name="shopkeeper_email_id" id="shopkeeper_email_id"/></td>
+        </tr>
+        <tr>
+            <td><label for="shopkeeper_phone_number">Mobile No*</label></td>
+            <td><input name="shopkeeper_phone_number" id="shopkeeper_phone_number"/></td>
+        </tr>
+        <tr>
+            <td><label for="category">Category</label></td>
+            <td><select name = 'category' id="category">
+          <option value="general">--Select--</option>
+          <option value="general">General</option>
+          <option value="clothing">Clothes</option>
+          <option value="medicines">Medicines</option>
+          <option value="audi">Food Outlets</option>
+          <option value="audi">Stationary</option>
+        </select></td>
+        </tr>
+        <tr>
+            <td><label for="shopkeeper_account_number">Account Number*</label></td>
+            <td><input name="shopkeeper_account_number" id="shopkeeper_account_number"/></td>
+        </tr>
+        <tr>
+            <td><label for="accountee_name">Accountee Name*</label></td>
+            <td><input name="accountee_name" id="accountee_name"/></td>
+        </tr>
+        <tr>
+            <td><label for="account_type">Account Type</label></td>
+            <td><select name = 'account_type' id="account_type">
+                <option value="general">--Select--</option>
+                  <option value="savings">Savings</option>
+                <option value="current">Current</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="ifsc_code">IFSC Code</label></td>
+            <td><input name="ifsc_code" id="ifsc_code"/></td>
+        </tr>
+        <tr>
+            <td><label for="bank_name">Bank Name</label></td>
+            <td><input name="bank_name" id="bank_name"/></td>
+        </tr>
+        <tr>
+            <td><label for="bank_city">Bank City</label></td>
+            <td><input name="bank_city" id="bank_city"/></td>
+        </tr>
+        <tr>
+            <td><label for="bank_branch_name">Bank Branch Name</label></td>
+            <td><input name="bank_branch_name" id="bank_branch_name"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" /></td>
+        </tr>
+    </table>
+</form>

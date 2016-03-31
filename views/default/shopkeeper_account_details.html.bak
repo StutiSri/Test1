@@ -1,0 +1,28 @@
+{{extend 'layout.html'}}
+<h1>Shopkeeper Account Details</h1>
+<div>{{=message}}</div>
+{{=form}}
+<script>
+jQuery(document).ready(function(){
+    jQuery('label[for=no_table_ifsc_code],#no_table_ifsc_code').hide();
+    jQuery('label[for=no_table_bank_name],#no_table_bank_name').hide();
+    jQuery('label[for=no_table_bank_state],#no_table_bank_state').hide();
+    jQuery('label[for=no_table_bank_city],#no_table_bank_city').hide();
+    jQuery('label[for=no_table_bank_branch_name],#no_table_bank_branch_name').hide();
+    jQuery('#no_table_uses_ifsc').click(function(){
+        alert(jQuery('input[name=uses_ifsc]:checked').val())
+        if(jQuery('#no_table_uses_ifsc:checked').val()=='By IFSC'){
+            jQuery('label[for=no_table_ifsc_code],#no_table_ifsc_code').show();
+            jQuery('label[for=no_table_bank_name],#no_table_bank_name').hide();
+            jQuery('label[for=no_table_bank_state],#no_table_bank_state').hide();
+            jQuery('label[for=no_table_bank_city],#no_table_bank_city').hide();
+            jQuery('label[for=no_table_bank_branch_name],#no_table_bank_branch_name').hide();
+        }else {
+            jQuery('label[for=no_table_ifsc_code],#no_table_ifsc_code').hide();
+            jQuery('label[for=no_table_bank_name],#no_table_bank_name').show();
+            jQuery('label[for=no_table_bank_state],#no_table_bank_state').show();
+            jQuery('label[for=no_table_bank_city],#no_table_bank_city').show();
+            jQuery('label[for=no_table_bank_branch_name],#no_table_bank_branch_name').show();
+        }});
+});
+</script>

@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+if db(db.tbl_categories.id > 0).count() == 0:
+    db.tbl_categories.insert(category_field_name='Clothing', category_name='Clothing')
+    db.tbl_categories.insert(category_field_name='FoodOutlets',category_name='Food Outlets')
+    db.tbl_categories.insert(category_field_name='GeneralStore',category_name='General Store')
+    db.tbl_categories.insert(category_field_name='Stationary',category_name='Stationary')
+    db.tbl_categories.insert(category_field_name='Medical',category_name='Medical')

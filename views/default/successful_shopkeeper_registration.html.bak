@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h3>{{=response.toolbar()}}</h3>
+<h1>{{=session.shopkeeper_name}} has been successfully registered</h1>

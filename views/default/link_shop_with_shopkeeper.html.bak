@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>Link Shops with Shopkeepers</h1>
+{{=form}}

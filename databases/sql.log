@@ -1,0 +1,300 @@
+timestamp: 2016-03-15T01:42:14.376691
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-03-15T01:42:14.740558
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-15T01:42:15.300948
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-15T01:42:15.511324
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-03-15T01:42:15.700735
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-15T01:42:15.968103
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-03-18T08:09:13.765998
+CREATE TABLE auth_user(
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512)
+);
+success!
+timestamp: 2016-03-18T08:09:14.643698
+CREATE TABLE auth_group(
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-18T08:09:14.822967
+CREATE TABLE auth_membership(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-18T08:09:15.003275
+CREATE TABLE auth_permission(
+    id SERIAL PRIMARY KEY,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-03-18T08:09:15.211437
+CREATE TABLE auth_event(
+    id SERIAL PRIMARY KEY,
+    time_stamp TIMESTAMP,
+    client_ip VARCHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-18T08:09:15.357313
+CREATE TABLE auth_cas(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-03-18T08:13:01.246375
+CREATE TABLE auth_user(
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512)
+);
+success!
+timestamp: 2016-03-18T08:13:01.623987
+CREATE TABLE auth_group(
+    id SERIAL PRIMARY KEY,
+    role VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-18T08:13:01.836314
+CREATE TABLE auth_membership(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-18T08:13:01.980325
+CREATE TABLE auth_permission(
+    id SERIAL PRIMARY KEY,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-03-18T08:13:02.151430
+CREATE TABLE auth_event(
+    id SERIAL PRIMARY KEY,
+    time_stamp TIMESTAMP,
+    client_ip VARCHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin VARCHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-18T08:13:02.313872
+CREATE TABLE auth_cas(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-03-18T08:14:11.404602
+CREATE TABLE tbl_customer(
+    id SERIAL PRIMARY KEY,
+    customer_phone_number INTEGER,
+    customer_name VARCHAR(512),
+    customer_email_id VARCHAR(512),
+    customer_password VARCHAR(512),
+    customer_otp INTEGER,
+    uniquekey VARCHAR(512) UNIQUE
+);
+success!
+timestamp: 2016-03-18T08:24:25.094243
+CREATE TABLE tbl_shops(
+    id SERIAL PRIMARY KEY,
+    shop_name VARCHAR(512),
+    shop_address VARCHAR(512),
+    shop_area VARCHAR(512),
+    shop_image VARCHAR(512)
+);
+success!
+timestamp: 2016-03-18T08:25:55.574782
+CREATE TABLE tbl_shopkeeper(
+    id SERIAL PRIMARY KEY,
+    shopkeeper_name VARCHAR(512),
+    shopkeeper_email_id VARCHAR(512),
+    shopkeeper_phone_number INTEGER,
+    shopkeeper_password VARCHAR(512),
+    shopkeeper_otp INTEGER,
+    shop_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  ,
+    uniquekey VARCHAR(512) UNIQUE
+);
+success!
+timestamp: 2016-03-18T08:25:55.792278
+CREATE TABLE tbl_categories(
+    id SERIAL PRIMARY KEY,
+    category_name VARCHAR(512),
+    category_image VARCHAR(512)
+);
+success!
+timestamp: 2016-03-18T08:26:30.483874
+CREATE TABLE tbl_shop_category_mapping(
+    id SERIAL PRIMARY KEY,
+    shop_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  ,
+    category_id INTEGER REFERENCES tbl_categories (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-18T08:26:30.622086
+CREATE TABLE tbl_account_details(
+    id SERIAL PRIMARY KEY,
+    shopkeeper_id INTEGER REFERENCES tbl_shopkeeper (id) ON DELETE CASCADE  ,
+    account_number INTEGER,
+    accountee_name VARCHAR(512),
+    account_type VARCHAR(512),
+    ifsc_code VARCHAR(512),
+    bank_name VARCHAR(512),
+    bank_city VARCHAR(512),
+    bank_branch_name VARCHAR(512),
+    uniquekey VARCHAR(512) UNIQUE
+);
+success!
+timestamp: 2016-03-18T08:27:40.422402
+ALTER TABLE tbl_categories DROP COLUMN category_image;
+success!
+timestamp: 2016-03-19T08:49:03.641077
+ALTER TABLE tbl_customer ADD customer_phone_number__tmp BIGINT;
+UPDATE tbl_customer SET customer_phone_number__tmp=customer_phone_number;
+ALTER TABLE tbl_customer DROP COLUMN customer_phone_number;
+ALTER TABLE tbl_customer ADD customer_phone_number BIGINT;
+UPDATE tbl_customer SET customer_phone_number=customer_phone_number__tmp;
+ALTER TABLE tbl_customer DROP COLUMN customer_phone_number__tmp;
+success!
+timestamp: 2016-03-19T08:49:03.921113
+ALTER TABLE tbl_shops ADD min_discount FLOAT8;
+success!
+timestamp: 2016-03-19T08:49:04.045311
+ALTER TABLE tbl_shopkeeper ADD shopkeeper_phone_number__tmp BIGINT;
+UPDATE tbl_shopkeeper SET shopkeeper_phone_number__tmp=shopkeeper_phone_number;
+ALTER TABLE tbl_shopkeeper DROP COLUMN shopkeeper_phone_number;
+ALTER TABLE tbl_shopkeeper ADD shopkeeper_phone_number BIGINT;
+UPDATE tbl_shopkeeper SET shopkeeper_phone_number=shopkeeper_phone_number__tmp;
+ALTER TABLE tbl_shopkeeper DROP COLUMN shopkeeper_phone_number__tmp;
+success!
+timestamp: 2016-03-19T08:49:04.105191
+ALTER TABLE tbl_categories ADD category_image VARCHAR(512);
+success!
+timestamp: 2016-03-20T11:39:24.546707
+ALTER TABLE tbl_categories ADD category_field_name VARCHAR(512);
+success!
+timestamp: 2016-03-20T20:46:23.937069
+ALTER TABLE tbl_shopkeeper DROP COLUMN shop_id;
+success!
+timestamp: 2016-03-20T20:58:15.734047
+CREATE TABLE tbl_shop_shopkeeper_mapping(
+    id SERIAL PRIMARY KEY,
+    shop_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  ,
+    shopkeeper_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-20T21:25:59.198794
+CREATE TABLE tbl_class(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(512),
+    parent_class INTEGER
+);
+success!
+success!
+timestamp: 2016-03-30T00:01:46.054852
+ALTER TABLE tbl_shop_shopkeeper_mapping ADD shop_id__tmp VARCHAR(512);
+UPDATE tbl_shop_shopkeeper_mapping SET shop_id__tmp=shop_id;
+ALTER TABLE tbl_shop_shopkeeper_mapping DROP COLUMN shop_id;
+ALTER TABLE tbl_shop_shopkeeper_mapping ADD shop_id VARCHAR(512);
+UPDATE tbl_shop_shopkeeper_mapping SET shop_id=shop_id__tmp;
+ALTER TABLE tbl_shop_shopkeeper_mapping DROP COLUMN shop_id__tmp;
+timestamp: 2016-03-30T00:01:46.812457
+ALTER TABLE tbl_shop_shopkeeper_mapping ADD shopkeeper_id__tmp VARCHAR(512);
+UPDATE tbl_shop_shopkeeper_mapping SET shopkeeper_id__tmp=shopkeeper_id;
+ALTER TABLE tbl_shop_shopkeeper_mapping DROP COLUMN shopkeeper_id;
+ALTER TABLE tbl_shop_shopkeeper_mapping ADD shopkeeper_id VARCHAR(512);
+UPDATE tbl_shop_shopkeeper_mapping SET shopkeeper_id=shopkeeper_id__tmp;
+ALTER TABLE tbl_shop_shopkeeper_mapping DROP COLUMN shopkeeper_id__tmp;
+success!
+timestamp: 2016-03-30T00:38:10.366698
+ALTER TABLE tbl_account_details ADD uses_ifsc VARCHAR(512);
+success!
+timestamp: 2016-03-30T08:37:53.573255
+ALTER TABLE tbl_account_details ADD bank_state VARCHAR(512);
+success!
+timestamp: 2016-03-31T07:50:47.221884
+ALTER TABLE tbl_account_details ADD account_number__tmp BIGINT;
+UPDATE tbl_account_details SET account_number__tmp=account_number;
+ALTER TABLE tbl_account_details DROP COLUMN account_number;
+ALTER TABLE tbl_account_details ADD account_number BIGINT;
+UPDATE tbl_account_details SET account_number=account_number__tmp;
+ALTER TABLE tbl_account_details DROP COLUMN account_number__tmp;
+success!

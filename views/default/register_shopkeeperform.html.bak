@@ -1,0 +1,7 @@
+{{extend 'layout.html'}}
+<h1>Shopkeeper Registration</h1>
+<div>{{=message}}<div>
+{{=form}}
+<hr/>
+<hr/>
+<hr/>
