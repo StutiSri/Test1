@@ -9,7 +9,6 @@ git init
 git add .
 git add Procfile
 git commit -a -m "first commit"
-heroku create
 git push heroku master
 heroku config:set AWS_ACCESS_KEY_ID=AKIAJ4LGE7F25ECGBVYQAWS_SECRET_ACCESS_KEY=0hK7uWPqwJBtq5e3k/WR4XqlwjQKMPDloHk56hNy
 heroku addons:add heroku-postgresql:hobby-dev
