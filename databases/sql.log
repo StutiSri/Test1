@@ -298,3 +298,129 @@ ALTER TABLE tbl_account_details ADD account_number BIGINT;
 UPDATE tbl_account_details SET account_number=account_number__tmp;
 ALTER TABLE tbl_account_details DROP COLUMN account_number__tmp;
 success!
+success!
+timestamp: 2016-03-31T23:18:45.563659
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-03-31T23:18:45.811915
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-31T23:18:45.957450
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-31T23:18:46.137391
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-03-31T23:18:46.293677
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-03-31T23:18:46.438465
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-03-31T23:18:46.572383
+CREATE TABLE tbl_customer(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_phone_number INTEGER,
+    customer_name CHAR(512),
+    customer_email_id CHAR(512),
+    customer_password CHAR(512),
+    customer_otp INTEGER,
+    uniquekey CHAR(512) UNIQUE
+);
+success!
+timestamp: 2016-03-31T23:18:46.727633
+CREATE TABLE tbl_shops(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shop_name CHAR(512),
+    shop_address CHAR(512),
+    shop_area CHAR(512),
+    min_discount DOUBLE,
+    shop_image CHAR(512)
+);
+success!
+timestamp: 2016-03-31T23:18:46.850751
+CREATE TABLE tbl_shopkeeper(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shopkeeper_name CHAR(512),
+    shopkeeper_email_id CHAR(512),
+    shopkeeper_phone_number INTEGER,
+    shopkeeper_password CHAR(512),
+    shopkeeper_otp INTEGER,
+    uniquekey CHAR(512) UNIQUE
+);
+success!
+timestamp: 2016-03-31T23:18:47.028372
+CREATE TABLE tbl_shop_shopkeeper_mapping(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shopkeeper_id INTEGER REFERENCES tbl_shopkeeper (id) ON DELETE CASCADE  ,
+    shop_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-31T23:18:47.173192
+CREATE TABLE tbl_categories(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category_field_name CHAR(512),
+    category_name CHAR(512),
+    category_image CHAR(512)
+);
+success!
+timestamp: 2016-03-31T23:18:47.395904
+CREATE TABLE tbl_shop_category_mapping(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shop_id INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  ,
+    category_id INTEGER REFERENCES tbl_categories (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-03-31T23:18:47.536397
+CREATE TABLE tbl_account_details(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shopkeeper_id INTEGER REFERENCES tbl_shopkeeper (id) ON DELETE CASCADE  ,
+    account_number INTEGER,
+    accountee_name CHAR(512),
+    account_type CHAR(512),
+    uses_ifsc CHAR(512),
+    ifsc_code CHAR(512),
+    bank_name CHAR(512),
+    bank_state CHAR(512),
+    bank_city CHAR(512),
+    bank_branch_name CHAR(512),
+    uniquekey CHAR(512) UNIQUE
+);
+success!

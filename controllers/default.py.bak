@@ -8,13 +8,12 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 
+@auth.requires_login()
 def index():
-    #response.view = 'default/index.json'
-    if not session.counter:
-        session.counter = 1
-    else:
-        session.counter += 1
-    return dict(message="Test1 welcomes you", counter=session.counter)
+    message = session.successmessage
+    if message is None:
+        message = ''
+    return dict(message=message)
 
 def register_shop():
     message=''
@@ -40,22 +39,29 @@ def register_shop():
             i = i+1
         if categoryCount>0:
             db.commit()
-            message='Shop registered successfully. Your shop id is : '+str(new_shop_id)
+            session.successmessage='Shop registered successfully. Your shop id is : '+str(new_shop_id)
+            redirect(URL('index'))
         else:
             message = 'Please specify atleast one category for your shop'
     return dict(form=form,message=message)
 
 def register_shopkeeperform():
+    return shopkeeperRegistration(db.tbl_shopkeeper,True)
+
+def shopkeeperRegistration(table,isNewShopkeeper):
     message = ''
-    fields = getUnmappedShops(True)
+    fields = getUnmappedShops()
     if len(fields)>0:
         hasLinkedShops = False
-        form=SQLFORM.factory(db.tbl_shopkeeper,*fields)
+        form=SQLFORM.factory(table,*fields)
         if form.process().accepted:
             for field in fields:
                 shop = request.vars.get(field.name)
                 if shop:
-                    new_shopkeeper_id = db.tbl_shopkeeper.insert(**db.tbl_shopkeeper._filter_fields(form.vars))
+                    if isNewShopkeeper:
+                        new_shopkeeper_id = db.tbl_shopkeeper.insert(**db.tbl_shopkeeper._filter_fields(form.vars))
+                    else:
+                        new_shopkeeper_id = request.vars.get('shopkeeper_id')
                     hasLinkedShops = True
                     break
             if hasLinkedShops:
@@ -63,7 +69,11 @@ def register_shopkeeperform():
                 form.vars.tbl_shopkeeper=new_shopkeeper_id
                 shopCount = linkShops(fields,new_shopkeeper_id)
                 session.new_shopkeeper_id = new_shopkeeper_id
-                redirect(URL('shopkeeper_account_details'))
+                if isNewShopkeeper:
+                    redirect(URL('shopkeeper_account_details'))
+                else:
+                    session.successmessage = 'Shops successfully linked with shopkeeper id : '+str(new_shopkeeper_id)
+                    redirect(URL('index'))
             else:
                 message = 'Please associate atleast one shop with shopkeeper'
                 response.flash = 'Failed'
@@ -91,17 +101,13 @@ def linkShops(fields,shopkeeper_id):
         i = i+1
     db.commit();
 
-def getUnmappedShops(asField):
+def getUnmappedShops():
     shops = db().select(db.tbl_shops.ALL)
     shopMappings = db().select(db.tbl_shop_shopkeeper_mapping.ALL)
     fields=[]
     for shop in shops:
         if isNotMapped(shop,shopMappings):
-            if asField:
                 fields.append(Field(shop.shop_name, 'boolean',label=shop.shop_name,default=shop.id))
-            else:
-                fields.append(INPUT(_name=shop.shop_name, _type = 'checkbox',_value=shop.id))
-                fields.append("  "+shop.shop_name)
     print(str(fields))
     return fields
 
@@ -113,71 +119,15 @@ def shopkeeper_account_details():
         for var in form.vars:
             print(str(var))
         db['tbl_account_details'].insert(**form.vars)
-        session.shopkeeper_name = form.vars.accountee_name
-        redirect(URL('successful_shopkeeper_registration'))
+        session.successmessage = 'Account successfully associated with shopkeeper id : ' + str(session.new_shopkeeper_id)
+        redirect(URL('index'))
     return dict(message=message,form=form)
 
-def validation():
-    if request.vars.shopkeeper_name:
-        session.shopkeeper_name= request.vars.shopkeeper_name
-    if request.vars.shopkeeper_email_id:
-        session.shopkeeper_email_id= request.vars.shopkeeper_email_id
-    if request.vars.shopkeeper_phone_number:
-        session.shopkeeper_phone_number= request.vars.shopkeeper_phone_number
-    if request.vars.shop_name:
-        session.shop_name= request.vars.shop_name
-    if request.vars.shop_address:
-        session.shop_address= request.vars.shop_address
-    if request.vars.shop_area:
-        session.shop_area= request.vars.shop_area
-    if request.vars.min_discount:
-        session.min_discount= request.vars.min_discount
-    if request.vars.category_name!="--Select--":
-        session.category_name= request.vars.category_name
-    if request.vars.account_number:
-        session.account_number= request.vars.account_number
-    if request.vars.accountee_name:
-        session.accountee_name= request.vars.accountee_name
-    if request.vars.account_type!="--Select--":
-        session.account_type= request.vars.account_type
-    if (request.vars.ifsc_code or (request.vars.bank_name and request.vars.bank_city and request.vars.bank_branch_name)):
-        if request.vars.ifsc_code:
-            session.ifsc_code= request.vars.ifsc_code
-        else:
-            session.bank_name= request.vars.bank_name
-            session.bank_city= request.vars.bank_city
-            session.bank_branch_name= request.vars.bank_branch_name
-    return true
-
-def successful_shopkeeper_registration():
-    return dict()
+def success():
+    return dict(message=session.successmessage)
 
 def link_shop_with_shopkeeper():
-    message=''
-    fields = getUnmappedShops(False)
-    print(str(len(fields)))
-    if len(fields)>0:
-        print('Shops left')
-        hasLinkedShops = False
-        fields.append(INPUT(_type='submit'))
-        form=FORM('Shopkeeper ID : ',(INPUT(_name='shopkeeper_id',requires=IS_IN_DB(db,db.tbl_shopkeeper.id))),*fields)
-        if form.process().accepted:
-            for field in fields:
-                shop = request.vars.get(field.name)
-                if shop:
-                    hasLinkedShops = True
-                    break
-            if hasLinkedShops:
-                shopkeeper_id = request.vars.get('shopkeeper_id')
-                shopCount = linkShops(fields,shopkeeper_id)
-                response.flash = 'Shops linked successfully'
-            else:
-                message = 'Please associate atleast one shop with shopkeeper'
-                response.flash = 'Failed'
-    else:
-        message = 'No unregistered shops left. Kindly register a shop before proceeding'
-        form = ''
-    return dict(message=message,form=form)
+    return shopkeeperRegistration(db.tbl_shop_shopkeeper_mapping,False)
 
 def user():
     """

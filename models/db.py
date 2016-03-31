@@ -14,10 +14,12 @@ from gluon.contrib.appconfig import AppConfig
 ## once in production, remove reload=True to gain full speed
 myconf = AppConfig(reload=True)
 
+from gluon.contrib.heroku import get_db
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL(myconf.take('db.uri'), pool_size=myconf.take('db.pool_size', cast=int), check_reserved=['all'])
+    #db = DAL(myconf.take('db.uri'), pool_size=myconf.take('db.pool_size', cast=int), check_reserved=['all'])
+    db = get_db(name=None, pool_size=10)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
     db = DAL('google:datastore+ndb')
@@ -67,6 +69,8 @@ mail.settings.sender = myconf.take('smtp.sender')
 mail.settings.login = myconf.take('smtp.login')
 
 ## configure auth policy
+#auth.settings.actions_disabled.append('register')
+#auth.settings.actions_disabled.append('request_reset_password')
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
@@ -108,8 +112,8 @@ db.define_table('tbl_shopkeeper',
                 Field('shopkeeper_otp','integer',writable=False,readable=False),
                Field('uniquekey', unique=True, compute=lambda r: r.shop_id+r.shopkeeper_email_id+r.shopkeeper_phone_number))
 db.define_table('tbl_shop_shopkeeper_mapping',
-               Field('shopkeeper_id'),
-               Field('shop_id'))
+               Field('shopkeeper_id',type='reference tbl_shopkeeper',requires=IS_IN_DB(db,db.tbl_shopkeeper.id)),
+               Field('shop_id',type='reference tbl_shops',requires=IS_IN_DB(db,db.tbl_shops.id),writable=False,readable=False))
 db.define_table('tbl_categories',
                 Field('category_field_name',type='string'),
                 Field('category_name',type='string'),

@@ -13,14 +13,14 @@ p6
 I3
 sS'sql'
 p7
-S'VARCHAR(512)'
+S'INTEGER REFERENCES tbl_shops (id) ON DELETE CASCADE  '
 p8
 sS'notnull'
 p9
 I00
 sS'type'
 p10
-S'string'
+S'reference tbl_shops'
 p11
 ssS'id'
 p12
@@ -55,10 +55,11 @@ I00
 sg6
 I2
 sg7
-S'VARCHAR(512)'
+S'INTEGER REFERENCES tbl_shopkeeper (id) ON DELETE CASCADE  '
 p24
 sg9
 I00
 sg10
-g11
+S'reference tbl_shopkeeper'
+p25
 ss.
