@@ -5,3 +5,29 @@
 <hr/>
 <hr/>
 <hr/>
+<script>
+jQuery(document).ready(function(){
+    jQuery('ifsc_code').hide();
+    jQuery('bank_name').hide();
+    jQuery('bank_state').hide();
+    jQuery('bank_city').hide();
+    jQuery('bank_branch_name').hide();
+    jQuery('uses_ifsc').change(function(){
+        if(jQuery('uses_ifsc').attr('value')=="{{=T('By IFSC')}}")
+        {
+            jQuery('ifsc_code').show();
+            jQuery('bank_name').hide();
+            jQuery('bank_state').hide();
+            jQuery('bank_city').hide();
+            jQuery('bank_branch_name').hide();
+        }
+        else {
+            jQuery('ifsc_code').hide();
+            jQuery('bank_name').show();
+            jQuery('bank_state').show();
+            jQuery('bank_city').show();
+            jQuery('bank_branch_name').show();
+        }});
+});
+</script>
+</script>

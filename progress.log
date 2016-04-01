@@ -436,3 +436,4 @@
 [2016-03-31 23:09:12] EDIT Test1/models/db.py: 1
 [2016-03-31 23:18:42] EDIT Test1/models/db.py: 2
 [2016-03-31 23:24:11] EDIT Test1/models/db.py: -2
+[2016-04-01 08:50:30] EDIT Test1/views/default/register_shopkeeperform.html: -26
