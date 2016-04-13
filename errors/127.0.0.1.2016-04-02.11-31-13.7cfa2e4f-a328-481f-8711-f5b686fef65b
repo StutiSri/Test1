@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.AttributeError'> 'Rows' object has no attribute 'get'"
+p3
+sS'layer'
+p4
+S'/home/stutisrivastava/web2py/applications/Test1/controllers/app.py'
+p5
+sS'code'
+p6
+S"# -*- coding: utf-8 -*-\n# try something like\nfrom random import randint\n@service.json\ndef shopkeeper_login(shopkeeper_id):\n    rows = db(db.tbl_shopkeeper.id==shopkeeper_id).select()\n    shopkeeper=rows.get(0)\n    if shopkeeper.shopkeeper_password is None:\n        n = randint(3, 6)\n        range_start = 10**(n-1)\n        range_end = (10**n)-1\n        otp = randint(range_start, range_end)\n        message = 'No password set yet,otp : '+str(otp)\n    return dict(message=message)\n\ndef call():\n    session.forget()\n    return service()\n\nresponse._vars=response._caller(call)\n"
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/stutisrivastava/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/stutisrivastava/web2py/applications/Test1/controllers/app.py", line 20, in <module>\n  File "/home/stutisrivastava/web2py/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/stutisrivastava/web2py/applications/Test1/controllers/app.py", line 18, in call\n    return service()\n  File "/home/stutisrivastava/web2py/gluon/tools.py", line 5954, in __call__\n    return self.serve_json(request.args[1:])\n  File "/home/stutisrivastava/web2py/gluon/tools.py", line 5636, in serve_json\n    s = universal_caller(self.json_procedures[args[0]], *args[1:], **d)\n  File "/home/stutisrivastava/web2py/gluon/tools.py", line 5295, in universal_caller\n    return f(**arg_dict)\n  File "/home/stutisrivastava/web2py/applications/Test1/controllers/app.py", line 7, in shopkeeper_login\n    shopkeeper=rows.get(0)\nAttributeError: \'Rows\' object has no attribute \'get\'\n'
+p11
+s.
